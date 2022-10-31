@@ -1,13 +1,18 @@
-## Project Installation and Running
+# Project Installation and Running
 
 - I deployed to Heroku, it can be accessed.
 Project live : https://tamerb-lab.herokuapp.com
 
-# Requirements:
+## Requirements:
+Tech:
 - Maven v.3.8.6
 - Java 8
 - Mysql v.8.30
 
+For Database:
+- Create "labdb" schema in MySQL
+
+## Installation
 1-Clone this repo 
 ```sh
 git clone https://github.com/mtamerb/easy-lab.git
@@ -24,6 +29,7 @@ mvn package
 ```sh
 cd target
 ```
+## Running
 5-Run Jar project file
 ```sh
 java -jar easylab-0.0.1-SNAPSHOT.jar
