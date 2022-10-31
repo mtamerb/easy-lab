@@ -11,6 +11,9 @@ Tech:
 
 For Database:
 - Create "labdb" schema in MySQL
+- Change default value with your mysql username and password in the application properties file
+    - path : easy-lab/src/main/resources/application.properties
+    - default : username = root password = mysql
 
 ## Installation
 1-Clone this repo 
