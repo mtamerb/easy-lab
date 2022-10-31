@@ -25,7 +25,7 @@ cd easy-lab
 ```sh
 mvn package
 ```
-4-Then go easy-lab tagret folder
+4-Then go easy-lab target folder
 ```sh
 cd target
 ```
