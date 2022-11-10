@@ -10,8 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
 public class ReportService {
@@ -34,8 +32,9 @@ public class ReportService {
         return reportRepository.findAll(pageable);
     }
 
-    public void save(Report report) {
+    public Report save(Report report) {
         reportRepository.save(report);
+        return report;
     }
 
     public Report get(Long id) {

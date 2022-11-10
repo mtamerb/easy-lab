@@ -43,6 +43,7 @@ public class Report {
     @NotNull
     private String reportDate;
 
+    private String photo;
 
     public Report(Long id) {
 
@@ -50,5 +51,11 @@ public class Report {
 
     public Report() {
 
+    }
+    @Transient
+    public String getPhotosImagePath() {
+        if (photo == null || id == null) return null;
+
+        return "/report-photos/" + id + "/" + photo;
     }
 }

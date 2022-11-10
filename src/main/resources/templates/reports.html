@@ -93,6 +93,10 @@
                         <a th:href="@{'/reports/' + ${currentPage} + '?sortField=reportDate&sortDir=' + ${reverseSortDir}}">reportDate</a>
                     </th>
 
+                    <th>
+                        <a th:href="@{'/reports/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">Edit & Photos</a>
+                    </th>
+
                     <th></th>
                 </tr>
                 </thead>
@@ -110,6 +114,8 @@
                         <td>
                             <a th:href="@{'/reports/edit/' + ${report.id}}">Edit</a>
                             <a th:href="@{'/reports/delete/' + ${report.id}}">Delete</a>
+                            <img th:src="@{${report.photosImagePath}}" />
+
                         </td>
 
                     </tr>

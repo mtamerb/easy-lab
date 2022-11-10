@@ -10,11 +10,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -58,8 +63,29 @@ public class ReportController {
 
 
     @PostMapping("/reports/save")
-    public String saveReports(Report report) {
-        reportService.save(report);
+    public String saveReports(Report report, @RequestParam("fileImage") MultipartFile multipartFile) throws Exception {
+
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+
+        report.setPhoto(fileName);
+
+        String uploadDir = "/report-photos/" + report.getId();
+        Path uploadPath = Paths.get(uploadDir);
+
+        try {
+            InputStream inputStream = multipartFile.getInputStream();
+            Path filePath = uploadPath.resolve(fileName);
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+
+        Report savedReport = reportService.save(report);
+
         return "redirect:/reports";
     }
 
