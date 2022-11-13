@@ -1,8 +1,5 @@
 # Project Installation and Running
 
-- I deployed to Heroku, it can be accessed.
-Project live : https://tamerb-lab.herokuapp.com
-
 ## Requirements:
 Tech:
 - Maven v.3.8.6
