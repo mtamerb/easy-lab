@@ -1,5 +1,7 @@
 # Project Installation and Running
 
+##  ~ Coming Soon : Login && Registration
+
 ## Requirements:
 Tech:
 - Maven v.3.8.6
