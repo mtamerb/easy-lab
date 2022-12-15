@@ -1,5 +1,6 @@
 package com.tamerb.easylab.controller;
 
+import com.tamerb.easylab.config.FileUploadUtil;
 import com.tamerb.easylab.exception.ResourceNotFoundException;
 import com.tamerb.easylab.model.Laborant;
 import com.tamerb.easylab.model.Report;
@@ -13,13 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -63,31 +60,21 @@ public class ReportController {
 
 
     @PostMapping("/reports/save")
-    public String saveReports(Report report, @RequestParam("fileImage") MultipartFile multipartFile) throws Exception {
+    public RedirectView saveUser(Report report,
+                                 @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        report.setPhotos(fileName);
 
-        report.setPhoto(fileName);
+        Report savedUser = reportService.save(report);
 
-        String uploadDir = "/report-photos/" + report.getId();
-        Path uploadPath = Paths.get(uploadDir);
+        String uploadDir = "user-photos/" + savedUser.getId();
 
-        try {
-            InputStream inputStream = multipartFile.getInputStream();
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
-
-        Report savedReport = reportService.save(report);
-
-        return "redirect:/reports";
+        return new RedirectView("/reports", true);
     }
+
 
     @GetMapping("/reports/new")
     public String createReports(Model model) {
@@ -112,7 +99,7 @@ public class ReportController {
 
 
     @RequestMapping("/reports/delete/{id}")
-    public String deleteReports(@PathVariable(name = "id") Long id) throws ResourceNotFoundException {
+    public String deleteReports(@PathVariable(name = "id") Long id) {
         reportService.delete(id);
         return "redirect:/reports";
     }

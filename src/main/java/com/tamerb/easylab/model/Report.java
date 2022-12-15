@@ -1,14 +1,11 @@
 package com.tamerb.easylab.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -43,19 +40,16 @@ public class Report {
     @NotNull
     private String reportDate;
 
-    private String photo;
-
-    public Report(Long id) {
-
-    }
+    @Column(length = 64)
+    private String photos;
 
     public Report() {
 
     }
     @Transient
     public String getPhotosImagePath() {
-        if (photo == null || id == null) return null;
+        if (photos == null || id == null) return null;
 
-        return "/report-photos/" + id + "/" + photo;
+        return "/user-photos/" + id + "/" + photos;
     }
 }
