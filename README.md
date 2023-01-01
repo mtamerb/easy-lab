@@ -39,6 +39,9 @@ java -jar easylab-0.0.1-SNAPSHOT.jar
 
 ### Go to localhost:8080 in the browser.
 
+## Snapshot
+![](https://i.imgur.com/caVpuyS.png)
+
 
 
 
