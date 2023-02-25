@@ -21,7 +21,7 @@ public class ReportRepositoryTests {
     @Test
     public void testCreateReport() {
 
-        Report savedReport = reportRepository.save(new Report(1L));
+        Report savedReport = reportRepository.save(new Report());
         Assertions.assertThat(savedReport.getId()).isGreaterThan(0);
 
 
