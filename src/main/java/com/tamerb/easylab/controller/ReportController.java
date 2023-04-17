@@ -1,7 +1,6 @@
 package com.tamerb.easylab.controller;
 
 import com.tamerb.easylab.config.FileUploadUtil;
-import com.tamerb.easylab.exception.ResourceNotFoundException;
 import com.tamerb.easylab.model.Laborant;
 import com.tamerb.easylab.model.Report;
 import com.tamerb.easylab.service.LaborantService;
@@ -18,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ReportController {
@@ -31,7 +31,6 @@ public class ReportController {
 
     @GetMapping("reports")
     public String home(Model model) {
-        String keyword = null;
         return pageReports(model, 1, "id", "asc", null);
     }
 
@@ -63,7 +62,8 @@ public class ReportController {
     public RedirectView saveUser(Report report,
                                  @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         report.setPhotos(fileName);
 
         Report savedUser = reportService.save(report);
@@ -87,7 +87,7 @@ public class ReportController {
 
 
     @GetMapping("reports/edit/{id}")
-    public String editReports(@PathVariable("id") Long id, Model model) throws ResourceNotFoundException {
+    public String editReports(@PathVariable("id") Long id, Model model)  {
         Report report = reportService.get(id);
         model.addAttribute("report", report);
 
