@@ -2,7 +2,7 @@
 
 ##  ~ Coming Soon : Login && Registration
 
-## live demo :  http://tahamz-env.eba-6xbnrpui.eu-west-2.elasticbeanstalk.com
+## live demo :  
 
 ## Requirements:
 Tech:
